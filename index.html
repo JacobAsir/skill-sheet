@@ -1,624 +1,914 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jacob Asir - Skill Sheet</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <style>
-        :root {
-            --color-bg: #fcfcf9;
-            --color-surface: #ffffff;
-            --color-text: #13343b;
-            --color-text-secondary: #626c71;
-            --color-primary: #21808d;
-            --color-primary-hover: #1d7480;
-            --color-border: rgba(94, 82, 64, 0.15);
-            --color-card-border: rgba(94, 82, 64, 0.1);
-            --color-accent-blue: rgba(59, 130, 246, 0.08);
-            --color-accent-green: rgba(34, 197, 94, 0.08);
-            --color-accent-purple: rgba(147, 51, 234, 0.08);
-            --color-accent-orange: rgba(249, 115, 22, 0.08);
-            --color-accent-pink: rgba(236, 72, 153, 0.08);
-            --color-accent-cyan: rgba(6, 182, 212, 0.08);
-            --color-accent-red: rgba(239, 68, 68, 0.08);
-            --color-accent-yellow: rgba(245, 158, 11, 0.08);
-            --bar-blue: #3b82f6;
-            --bar-green: #22c55e;
-            --bar-purple: #9333ea;
-            --bar-orange: #f97316;
-            --bar-pink: #ec4899;
-            --bar-cyan: #06b6d4;
-            --bar-red: #ef4444;
-            --bar-yellow: #eab308;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --color-bg: #1f2121;
-                --color-surface: #262828;
-                --color-text: #f5f5f5;
-                --color-text-secondary: rgba(167, 169, 169, 0.7);
-                --color-primary: #32b8c6;
-                --color-primary-hover: #2da6b2;
-                --color-border: rgba(119, 124, 124, 0.25);
-                --color-card-border: rgba(119, 124, 124, 0.15);
-                --color-accent-blue: rgba(29, 78, 216, 0.15);
-                --color-accent-green: rgba(21, 128, 61, 0.15);
-                --color-accent-purple: rgba(107, 33, 168, 0.15);
-                --color-accent-orange: rgba(194, 65, 12, 0.15);
-                --color-accent-pink: rgba(190, 24, 93, 0.15);
-                --color-accent-cyan: rgba(8, 145, 178, 0.15);
-                --color-accent-red: rgba(185, 28, 28, 0.15);
-                --color-accent-yellow: rgba(180, 83, 9, 0.15);
+    <title>Jacob Asir - Premium Interactive Skill Sheet & AI Engineer Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"Fira Code"', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9fa',
+                            100: '#dcf2f5',
+                            500: '#21808d',
+                            600: '#1d7480',
+                            700: '#165a63',
+                        }
+                    }
+                }
             }
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
+    </script>
+    <style>
         body {
-            font-family: "FKGroteskNeue", "Geist", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: var(--color-bg);
-            color: var(--color-text);
-            line-height: 1.5;
-            padding: 24px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
         }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
+        .skill-progress-bar {
+            transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
-        /* Header */
-        .header {
-            text-align: center;
-            margin-bottom: 32px;
-            padding-bottom: 24px;
-            border-bottom: 2px solid var(--color-border);
-        }
-
-        .header h1 {
-            font-size: 30px;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-            margin-bottom: 6px;
-        }
-
-        .header .subtitle {
-            font-size: 16px;
-            color: var(--color-primary);
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-
-        .header .contact {
-            font-size: 13px;
-            color: var(--color-text-secondary);
-        }
-
-        .header .contact span {
-            margin: 0 8px;
-        }
-
-        /* Section */
-        .section {
-            margin-bottom: 28px;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--color-border);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .section-title .icon {
-            width: 22px;
-            height: 22px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
-
-        /* Skill Category Grid */
-        .skill-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        @media (max-width: 640px) {
-            .skill-grid { grid-template-columns: 1fr; }
-        }
-
-        .skill-card {
-            background: var(--color-surface);
-            border: 1px solid var(--color-card-border);
-            border-radius: 12px;
-            padding: 16px;
-            transition: box-shadow 0.25s;
-        }
-
-        .skill-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
-
-        .skill-card-header {
-            font-size: 13px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            margin-bottom: 12px;
-            color: var(--color-text-secondary);
-        }
-
-        /* Skill Bar */
-        .skill-item {
-            margin-bottom: 10px;
-        }
-
-        .skill-item:last-child { margin-bottom: 0; }
-
-        .skill-label {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 4px;
-        }
-
-        .skill-name {
-            font-size: 13px;
-            font-weight: 500;
-        }
-
-        .skill-level {
-            font-size: 11px;
-            color: var(--color-text-secondary);
-            font-weight: 500;
-        }
-
-        .skill-bar-bg {
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
             height: 8px;
-            background: var(--color-border);
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569;
             border-radius: 99px;
-            overflow: hidden;
-        }
-
-        .skill-bar-fill {
-            height: 100%;
-            border-radius: 99px;
-            transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
-            width: 0;
-        }
-
-        /* Tags */
-        .tags-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .tag {
-            display: inline-flex;
-            align-items: center;
-            padding: 6px 14px;
-            border-radius: 99px;
-            font-size: 12px;
-            font-weight: 500;
-            border: 1px solid transparent;
-        }
-
-        .tag-blue { background: var(--color-accent-blue); color: #2563eb; border-color: rgba(59,130,246,0.2); }
-        .tag-green { background: var(--color-accent-green); color: #16a34a; border-color: rgba(34,197,94,0.2); }
-        .tag-purple { background: var(--color-accent-purple); color: #7c3aed; border-color: rgba(147,51,234,0.2); }
-        .tag-orange { background: var(--color-accent-orange); color: #ea580c; border-color: rgba(249,115,22,0.2); }
-        .tag-pink { background: var(--color-accent-pink); color: #db2777; border-color: rgba(236,72,153,0.2); }
-        .tag-cyan { background: var(--color-accent-cyan); color: #0891b2; border-color: rgba(6,182,212,0.2); }
-        .tag-red { background: var(--color-accent-red); color: #dc2626; border-color: rgba(239,68,68,0.2); }
-        .tag-yellow { background: var(--color-accent-yellow); color: #b45309; border-color: rgba(245,158,11,0.2); }
-
-        @media (prefers-color-scheme: dark) {
-            .tag-blue { color: #60a5fa; }
-            .tag-green { color: #4ade80; }
-            .tag-purple { color: #a78bfa; }
-            .tag-orange { color: #fb923c; }
-            .tag-pink { color: #f472b6; }
-            .tag-cyan { color: #22d3ee; }
-            .tag-red { color: #f87171; }
-            .tag-yellow { color: #fbbf24; }
-        }
-
-        /* Summary Stats */
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 28px;
-        }
-
-        @media (max-width: 640px) {
-            .stats-row { grid-template-columns: repeat(2, 1fr); }
-        }
-
-        .stat-card {
-            background: var(--color-surface);
-            border: 1px solid var(--color-card-border);
-            border-radius: 12px;
-            padding: 16px;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 28px;
-            font-weight: 600;
-            color: var(--color-primary);
-            line-height: 1.2;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: var(--color-text-secondary);
-            margin-top: 4px;
-            font-weight: 500;
-        }
-
-        /* Full-width skill card */
-        .skill-card-full {
-            grid-column: 1 / -1;
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid var(--color-border);
-            margin-top: 8px;
-        }
-
-        .footer p {
-            font-size: 12px;
-            color: var(--color-text-secondary);
-        }
-
-        /* Print / PDF optimization */
-        @media print {
-            body { padding: 0; background: #fff; }
-            .skill-bar-fill { width: var(--target-width) !important; }
         }
     </style>
 </head>
-<body>
-    <div class="container" id="skill-sheet">
+<body class="bg-zinc-950 text-zinc-100 transition-colors duration-300 min-h-screen">
 
-        <!-- Header -->
-        <div class="header">
-            <h1>Jacob Asir</h1>
-            <div class="subtitle">AI Engineer</div>
-            <div class="contact">
-                <span>📍 Goa, India</span>
-                <span>📧 jacobasir2@gmail.com</span>
-                <span>📱 +91 7769043307</span>
-                <span>🔗 <a href="https://datascienceportfol.io/VistonAI" target="_blank" style="color:var(--color-primary); text-decoration:none;">Portfolio/VistonAI</a></span>
-                <span>💻 <a href="http://www.github.com/JacobAsir" target="_blank" style="color:var(--color-primary); text-decoration:none;">Github</a></span>
+    <!-- Top Action Navigation Bar (Sticky & Glassmorphism) -->
+    <header class="no-print sticky top-0 z-50 bg-zinc-900/80 backdrop-blur-md border-b border-zinc-800 py-3 px-4 md:px-8">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="h-3 w-3 rounded-full bg-emerald-500 animate-pulse"></div>
+                <span class="text-xs font-semibold uppercase tracking-wider text-emerald-400">Available for AI Engineer &amp; Agent Developer Roles</span>
             </div>
         </div>
+    </header>
 
-        <!-- Summary Stats -->
-        <div class="stats-row">
-            <div class="stat-card">
-                <div class="stat-number">30+</div>
-                <div class="stat-label">Technical Skills</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">3</div>
-                <div class="stat-label">Professional Roles</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">20+</div>
-                <div class="stat-label">Projects</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">2</div>
-                <div class="stat-label">Certifications</div>
-            </div>
-        </div>
-
-        <!-- Core AI & ML Skills -->
-        <div class="section">
-            <div class="section-title"><span class="icon">🧠</span> Core AI &amp; Machine Learning</div>
-            <div class="skill-grid">
-                <div class="skill-card">
-                    <div class="skill-card-header">Generative AI</div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">LLMs (Llama, Gemini, OpenAI)</span><span class="skill-level">Advanced</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:90%;" data-width="90%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">RAG Pipelines</span><span class="skill-level">Advanced</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:88%;" data-width="88%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">AI Agents</span><span class="skill-level">Intermediate</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:75%;" data-width="75%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">Fine-Tuning</span><span class="skill-level">Intermediate</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:70%;" data-width="70%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">Prompt Engineering</span><span class="skill-level">Advanced</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:92%;" data-width="92%"></div></div>
+    <!-- Main Container -->
+    <main class="max-w-6xl mx-auto px-4 py-8 md:py-12" id="skill-sheet-wrapper">
+        
+        <!-- Premium Header Block -->
+        <section class="mb-8 text-center md:text-left">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-zinc-800 pb-8">
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-2">
+                        Jacob Asir
+                    </h1>
+                    <p class="text-lg md:text-xl font-medium text-brand-100 mb-4">
+                        AI Engineer | AI Agent Developer | LLM &amp; RAG Specialist
+                    </p>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-y-2 gap-x-4 text-xs md:text-sm text-zinc-400">
+                        <span class="flex items-center gap-1.5">
+                            📍 Goa, India
+                        </span>
+                        <span class="hidden md:inline">•</span>
+                        <a href="mailto:jacobasir2@gmail.com" class="hover:text-brand-500 transition">📧 jacobasir2@gmail.com</a>
                     </div>
                 </div>
-                <div class="skill-card">
-                    <div class="skill-card-header">Machine Learning</div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">Classification &amp; Regression</span><span class="skill-level">Advanced</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:85%;" data-width="85%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">Clustering</span><span class="skill-level">Intermediate</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:72%;" data-width="72%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">NLP</span><span class="skill-level">Advanced</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:85%;" data-width="85%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">XGBoost / Ensemble</span><span class="skill-level">Advanced</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:82%;" data-width="82%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">Computer Vision (YOLOv8)</span><span class="skill-level">Intermediate</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:72%;" data-width="72%"></div></div>
-                    </div>
+
+                <!-- High-Engagement Socials / Credentials Panel -->
+                <div class="flex flex-wrap justify-center gap-3">
+                    <a href="https://github.com/JacobAsir" target="_blank" class="flex items-center gap-2 px-4 py-2.5 bg-zinc-900 border border-zinc-800 rounded-xl text-sm font-medium hover:border-brand-500 hover:text-brand-500 transition shadow-sm">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.579 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                    <a href="https://datascienceportfol.io/VistonAI" target="_blank" class="flex items-center gap-2 px-4 py-2.5 bg-zinc-900 border border-zinc-800 rounded-xl text-sm font-medium hover:border-brand-500 hover:text-brand-500 transition shadow-sm">
+                        <svg class="w-4 h-4 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                        Portfolio
+                    </a>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Development & Engineering -->
-        <div class="section">
-            <div class="section-title"><span class="icon">⚙️</span> Development &amp; Engineering</div>
-            <div class="skill-grid">
-                <div class="skill-card">
-                    <div class="skill-card-header">Backend &amp; APIs</div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">Python</span><span class="skill-level">Intermediate</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:75%;" data-width="75%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">FastAPI</span><span class="skill-level">Intermediate</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:72%;" data-width="72%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">Amazon SP-API</span><span class="skill-level">Intermediate</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:70%;" data-width="70%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">OAuth 2.0 / Auth</span><span class="skill-level">Intermediate</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:70%;" data-width="70%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">REST API Design</span><span class="skill-level">Intermediate</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:72%;" data-width="72%"></div></div>
-                    </div>
+        <!-- Dynamic Statistics Row -->
+        <section class="mb-10">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="print-card bg-zinc-900 border border-zinc-800 rounded-2xl p-5 text-center shadow-sm hover:-translate-y-1 transition duration-300">
+                    <div class="text-3xl font-extrabold text-brand-100">30+</div>
+                    <div class="text-xs text-zinc-400 mt-1 font-semibold uppercase tracking-wider">Technical Skills</div>
                 </div>
-                <div class="skill-card">
-                    <div class="skill-card-header">Data &amp; Databases</div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">SQL</span><span class="skill-level">Intermediate</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:72%;" data-width="72%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">PostgreSQL</span><span class="skill-level">Intermediate</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:70%;" data-width="70%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">MySQL / SQLite</span><span class="skill-level">Intermediate</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:75%;" data-width="75%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">FAISS Vector DB</span><span class="skill-level">Intermediate</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:72%;" data-width="72%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">Data Pipelines</span><span class="skill-level">Advanced</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:85%;" data-width="85%"></div></div>
-                    </div>
+                <div class="print-card bg-zinc-900 border border-zinc-800 rounded-2xl p-5 text-center shadow-sm hover:-translate-y-1 transition duration-300">
+                    <div class="text-3xl font-extrabold text-brand-100">3</div>
+                    <div class="text-xs text-zinc-400 mt-1 font-semibold uppercase tracking-wider">Professional Roles</div>
+                </div>
+                <div class="print-card bg-zinc-900 border border-zinc-800 rounded-2xl p-5 text-center shadow-sm hover:-translate-y-1 transition duration-300">
+                    <div class="text-3xl font-extrabold text-brand-100">25+</div>
+                    <div class="text-xs text-zinc-400 mt-1 font-semibold uppercase tracking-wider">Projects Completed</div>
+                </div>
+                <div class="print-card bg-zinc-900 border border-zinc-800 rounded-2xl p-5 text-center shadow-sm hover:-translate-y-1 transition duration-300">
+                    <div class="text-3xl font-extrabold text-brand-100">2</div>
+                    <div class="text-xs text-zinc-400 mt-1 font-semibold uppercase tracking-wider">Core Certifications</div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Frameworks & Libraries -->
-        <div class="section">
-            <div class="section-title"><span class="icon">📦</span> Frameworks &amp; Libraries</div>
-            <div class="tags-container">
-                <span class="tag tag-blue">LangChain</span>
-                <span class="tag tag-purple">FAISS</span>
-                <span class="tag tag-green">FastAPI</span>
-                <span class="tag tag-orange">YOLOv8</span>
-                <span class="tag tag-cyan">OpenCV</span>
-                <span class="tag tag-pink">XGBoost</span>
-                <span class="tag tag-yellow">Plotly</span>
-                <span class="tag tag-blue">Matplotlib</span>
-                <span class="tag tag-purple">Seaborn</span>
-                <span class="tag tag-green">Groq API</span>
-                <span class="tag tag-orange">Gmail API</span>
-                <span class="tag tag-cyan">Telegram API</span>
-                <span class="tag tag-red">Gemini API</span>
-                <span class="tag tag-yellow">Llama</span>
-            </div>
-        </div>
+        <!-- Executive Summary & Dynamic Highlights Grid -->
+        <section class="mb-10">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Short Executive Abstract -->
+                <div class="lg:col-span-2 space-y-4">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-500">Executive Brief</h3>
+                    <p class="text-zinc-300 leading-relaxed text-base md:text-lg">
+                        AI Engineer with hands-on experience building production-grade <span class="text-brand-100 font-semibold">Generative AI applications</span>, enterprise SaaS platforms, and end-to-end data science solutions. Specialist in multi-agent orchestration, advanced <span class="text-brand-100 font-semibold">RAG architectures</span>, and resilient server backend services handling massive real-time datasets.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-1">
+                        <span class="px-3 py-1 bg-zinc-900 text-brand-500 text-xs font-semibold rounded-full border border-zinc-800">LangGraph Agents</span>
+                        <span class="px-3 py-1 bg-zinc-900 text-brand-500 text-xs font-semibold rounded-full border border-zinc-800">Advanced RAG Pipelines</span>
+                        <span class="px-3 py-1 bg-zinc-900 text-brand-500 text-xs font-semibold rounded-full border border-zinc-800">Amazon SP-API Master</span>
+                        <span class="px-3 py-1 bg-emerald-950/20 text-emerald-400 text-xs font-semibold rounded-full border border-emerald-900/40">JLPT N4 (Elementary Japanese)</span>
+                    </div>
+                </div>
 
-        <!-- Tools & Platforms -->
-        <div class="section">
-            <div class="section-title"><span class="icon">🛠️</span> Tools &amp; Platforms</div>
-            <div class="tags-container">
-                <span class="tag tag-blue">VS Code</span>
-                <span class="tag tag-green">Jupyter Notebook</span>
-                <span class="tag tag-purple">Git / GitHub</span>
-                <span class="tag tag-orange">Tableau</span>
-                <span class="tag tag-cyan">Excel</span>
-                <span class="tag tag-pink">MLOps</span>
-                <span class="tag tag-yellow">Automation</span>
-                <span class="tag tag-red">Async Processing</span>
-            </div>
-        </div>
-
-        <!-- Data Visualization -->
-        <div class="section">
-            <div class="section-title"><span class="icon">📊</span> Data Visualization &amp; Analytics</div>
-            <div class="skill-grid">
-                <div class="skill-card skill-card-full">
-                    <div class="skill-card-header">Visualization &amp; Reporting</div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px;">
-                        <div class="skill-item">
-                            <div class="skill-label"><span class="skill-name">Matplotlib</span><span class="skill-level">Advanced</span></div>
-                            <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:85%;" data-width="85%"></div></div>
+                <!-- Live Metrics Dashboard -->
+                <div class="bg-gradient-to-br from-brand-500 to-brand-700 text-white rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+                    <div>
+                        <div class="text-xs uppercase font-bold tracking-widest text-brand-100 mb-1">Production Scale &amp; Reach</div>
+                        <h4 class="text-lg font-semibold mb-4">Engineering Impact</h4>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <div class="text-2xl font-extrabold tracking-tight">50,000+</div>
+                            <div class="text-[10px] text-brand-100 uppercase tracking-wider font-semibold">Managed Inventory Items</div>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-label"><span class="skill-name">Seaborn</span><span class="skill-level">Advanced</span></div>
-                            <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:82%;" data-width="82%"></div></div>
+                        <div>
+                            <div class="text-2xl font-extrabold tracking-tight">40+</div>
+                            <div class="text-[10px] text-brand-100 uppercase tracking-wider font-semibold">SaaS API Endpoints</div>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-label"><span class="skill-name">Plotly</span><span class="skill-level">Intermediate</span></div>
-                            <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:75%;" data-width="75%"></div></div>
+                        <div>
+                            <div class="text-2xl font-extrabold tracking-tight">89.8%</div>
+                            <div class="text-[10px] text-brand-100 uppercase tracking-wider font-semibold">ML Forecasting Accuracy</div>
                         </div>
-                        <div class="skill-item">
-                            <div class="skill-label"><span class="skill-name">Tableau</span><span class="skill-level">Intermediate</span></div>
-                            <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:70%;" data-width="70%"></div></div>
+                        <div>
+                            <div class="text-2xl font-extrabold tracking-tight">100%</div>
+                            <div class="text-[10px] text-brand-100 uppercase tracking-wider font-semibold">Data Parser Accuracy</div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Domain Expertise -->
-        <div class="section">
-            <div class="section-title"><span class="icon">🎯</span> Domain Expertise</div>
-            <div class="skill-grid">
-                <div class="skill-card">
-                    <div class="skill-card-header">E-Commerce &amp; SaaS</div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">Amazon Seller Platform</span><span class="skill-level">Advanced</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:90%;" data-width="90%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">PPC / Advertising Analytics</span><span class="skill-level">Advanced</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:85%;" data-width="85%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">Financial Analytics</span><span class="skill-level">Intermediate</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:78%;" data-width="78%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">Rate Limiting / Pagination</span><span class="skill-level">Advanced</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:85%;" data-width="85%"></div></div>
+        <!-- Dynamic Domain Expertise -->
+        <section class="mb-10">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-6">Domain Expertise &amp; Verticals</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="domainExpertise">
+                
+                <!-- E-Commerce & SaaS Vertical -->
+                <div class="skill-group-card print-card bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-sm hover:shadow-md transition duration-300">
+                    <h4 class="text-sm font-extrabold uppercase text-zinc-400 tracking-wider mb-4 border-b border-zinc-800 pb-2 flex items-center justify-between">
+                        <span>E-Commerce &amp; SaaS Engineering</span>
+                        <span class="text-xs font-normal text-zinc-500">Scale Focused</span>
+                    </h4>
+                    <div class="space-y-4">
+                        <!-- Item -->
+                        <div>
+                            <div class="flex justify-between items-center text-xs font-semibold mb-1">
+                                <span class="text-zinc-200">Amazon Seller Platform &amp; SP-APIs</span>
+                                <span class="text-brand-500 font-bold text-[10px] uppercase">Advanced</span>
+                            </div>
+                            <div class="w-full bg-zinc-850 h-2 rounded-full overflow-hidden">
+                                <div class="bg-brand-500 h-full rounded-full" style="width: 90%;"></div>
+                            </div>
+                            <p class="text-[11px] text-zinc-500 mt-1 leading-normal">Ingested 10+ SP-APIs for 50,000+ live items without performance loss.</p>
+                        </div>
+                        <!-- Item -->
+                        <div>
+                            <div class="flex justify-between items-center text-xs font-semibold mb-1">
+                                <span class="text-zinc-200">PPC &amp; Advertising Analytics</span>
+                                <span class="text-brand-500 font-bold text-[10px] uppercase">Advanced</span>
+                            </div>
+                            <div class="w-full bg-zinc-850 h-2 rounded-full overflow-hidden">
+                                <div class="bg-brand-500 h-full rounded-full" style="width: 88%;"></div>
+                            </div>
+                            <p class="text-[11px] text-zinc-500 mt-1 leading-normal">Aggregated metrics for complex Sponsored Products &amp; Brands ads.</p>
+                        </div>
+                        <!-- Item -->
+                        <div>
+                            <div class="flex justify-between items-center text-xs font-semibold mb-1">
+                                <span class="text-zinc-200">Order-Level Financial Analytics</span>
+                                <span class="text-brand-500 font-bold text-[10px] uppercase">Intermediate</span>
+                            </div>
+                            <div class="w-full bg-zinc-850 h-2 rounded-full overflow-hidden">
+                                <div class="bg-brand-500 h-full rounded-full" style="width: 78%;"></div>
+                            </div>
+                            <p class="text-[11px] text-zinc-500 mt-1 leading-normal">Profitability &amp; FBA/FBM healthy inventory tracking models.</p>
+                        </div>
+                        <!-- Item -->
+                        <div>
+                            <div class="flex justify-between items-center text-xs font-semibold mb-1">
+                                <span class="text-zinc-200">API Rate Limiting &amp; Smart Pagination</span>
+                                <span class="text-brand-500 font-bold text-[10px] uppercase">Advanced</span>
+                            </div>
+                            <div class="w-full bg-zinc-850 h-2 rounded-full overflow-hidden">
+                                <div class="bg-brand-500 h-full rounded-full" style="width: 92%;"></div>
+                            </div>
+                            <p class="text-[11px] text-zinc-500 mt-1 leading-normal">Handles strict Amazon rate constraints with queue-based backoffs.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="skill-card">
-                    <div class="skill-card-header">AI Applications</div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">Healthcare AI (RAG)</span><span class="skill-level">Intermediate</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:75%;" data-width="75%"></div></div>
+
+                <!-- AI Applications Vertical -->
+                <div class="skill-group-card print-card bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-sm hover:shadow-md transition duration-300">
+                    <h4 class="text-sm font-extrabold uppercase text-zinc-400 tracking-wider mb-4 border-b border-zinc-800 pb-2 flex items-center justify-between">
+                        <span>AI &amp; Analytical Solutions</span>
+                        <span class="text-xs font-normal text-zinc-500">Innovation Focused</span>
+                    </h4>
+                    <div class="space-y-4">
+                        <!-- Item -->
+                        <div>
+                            <div class="flex justify-between items-center text-xs font-semibold mb-1">
+                                <span class="text-zinc-200">Healthcare AI (RAG &amp; Guardrails)</span>
+                                <span class="text-emerald-400 font-bold text-[10px] uppercase">Intermediate</span>
+                            </div>
+                            <div class="w-full bg-zinc-850 h-2 rounded-full overflow-hidden">
+                                <div class="bg-emerald-500 h-full rounded-full" style="width: 80%;"></div>
+                            </div>
+                            <p class="text-[11px] text-zinc-500 mt-1 leading-normal">Engineered clinical inquiry parsing pipelines with stateful memory.</p>
+                        </div>
+                        <!-- Item -->
+                        <div>
+                            <div class="flex justify-between items-center text-xs font-semibold mb-1">
+                                <span class="text-zinc-200">Agriculture (Edge Pest Detection &amp; Computer Vision)</span>
+                                <span class="text-emerald-400 font-bold text-[10px] uppercase">Intermediate</span>
+                            </div>
+                            <div class="w-full bg-zinc-850 h-2 rounded-full overflow-hidden">
+                                <div class="bg-emerald-500 h-full rounded-full" style="width: 75%;"></div>
+                            </div>
+                            <p class="text-[11px] text-zinc-500 mt-1 leading-normal">YOLOv8-powered object detection combined with bilingual advice bots.</p>
+                        </div>
+                        <!-- Item -->
+                        <div>
+                            <div class="flex justify-between items-center text-xs font-semibold mb-1">
+                                <span class="text-zinc-200">Energy &amp; Emissions Forecasting</span>
+                                <span class="text-emerald-400 font-bold text-[10px] uppercase">Intermediate</span>
+                            </div>
+                            <div class="w-full bg-zinc-850 h-2 rounded-full overflow-hidden">
+                                <div class="bg-emerald-500 h-full rounded-full" style="width: 72%;"></div>
+                            </div>
+                            <p class="text-[11px] text-zinc-500 mt-1 leading-normal">XGBoost-based energy &amp; emission predictive accuracy (89.8%).</p>
+                        </div>
+                        <!-- Item -->
+                        <div>
+                            <div class="flex justify-between items-center text-xs font-semibold mb-1">
+                                <span class="text-zinc-200">Email &amp; Communication AI Automation</span>
+                                <span class="text-emerald-400 font-bold text-[10px] uppercase">Advanced</span>
+                            </div>
+                            <div class="w-full bg-zinc-850 h-2 rounded-full overflow-hidden">
+                                <div class="bg-emerald-500 h-full rounded-full" style="width: 88%;"></div>
+                            </div>
+                            <p class="text-[11px] text-zinc-500 mt-1 leading-normal">Automates Gmail triage, semantic classifications, and Telegram alerts.</p>
+                        </div>
                     </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">Agriculture (Pest Detection)</span><span class="skill-level">Intermediate</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:72%;" data-width="72%"></div></div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Compact, High-Impact "Build to Japan" Hub Launcher -->
+        <section class="mb-10 no-print">
+            <div id="jp-hub-launcher" onclick="openJapanHub()" class="relative overflow-hidden bg-gradient-to-r from-red-955/20 to-zinc-900 border border-red-900/40 rounded-2xl p-6 md:p-8 cursor-pointer group hover:border-red-500 shadow-sm hover:shadow-md transition duration-300">
+                <!-- Red circular accent imitating Japanese flag subtly -->
+                <div class="absolute -right-10 -bottom-10 w-44 h-44 rounded-full bg-red-500/10 group-hover:scale-110 transition duration-500"></div>
+                
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-extrabold text-red-400 tracking-widest uppercase">Special Engineering Project Hub</span>
+                            <span class="px-2 py-0.5 bg-red-500 text-white text-[10px] font-bold rounded-full">5 Active Apps</span>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-white group-hover:text-red-400 transition">
+                            🇯🇵 The "Build to Japan" Ecosystem
+                        </h3>
+                        <p class="text-sm text-zinc-300 max-w-2xl leading-relaxed">
+                            Build to Japan series is a personal engineering sprint to build highly contextual, AI-powered utilities designed to solve real, everyday friction points for residents and travelers in Japan—pushing the boundaries of agentic RAG pipelines, multimodal vision systems, and more.
+                        </p>
                     </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">Energy Forecasting</span><span class="skill-level">Intermediate</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:70%;" data-width="70%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">Email AI Automation</span><span class="skill-level">Advanced</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:85%;" data-width="85%"></div></div>
+                    <div class="flex flex-col items-center justify-center shrink-0">
+                        <button class="flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-lg shadow-red-600/20 transition">
+                            <span>Explore Japan Hub</span>
+                            <svg class="w-4 h-4 group-hover:translate-x-1 transition duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg>
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Education & Certs -->
-        <div class="section">
-            <div class="section-title"><span class="icon">🎓</span> Education &amp; Certifications</div>
-            <div class="skill-grid">
-                <div class="skill-card">
-                    <div class="skill-card-header">Education</div>
-                    <p style="font-size:13px; margin-bottom:8px;"><strong>Certificate Program in Data Science</strong><br><span style="color:var(--color-text-secondary);">IIIT Bengaluru · Feb 2024</span></p>
-                    <p style="font-size:13px;"><strong>B.Sc. in Physics</strong><br><span style="color:var(--color-text-secondary);">St. Xavier's College, Goa · Aug 2022</span></p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-card-header">Languages</div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">English</span><span class="skill-level">Fluent</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:95%;" data-width="95%"></div></div>
+        <!-- Core Technical Capabilities Grid -->
+        <section class="mb-12">
+            <div class="mb-6">
+                <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-500">Core Technical Capabilities</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="skillsGrid">
+                
+                <!-- GenAI & Agent Architectures Card -->
+                <div class="skill-group-card print-card bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:shadow-lg transition duration-300">
+                    <h4 class="text-sm font-extrabold uppercase text-zinc-400 tracking-wider mb-4 border-b border-zinc-800 pb-2">Generative AI &amp; Intelligent Agents</h4>
+                    <div class="space-y-4">
+                        <!-- Skill Item -->
+                        <div class="skill-item" data-skill-id="rag">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-sm font-semibold text-zinc-200">RAG Pipelines (Retrieval-Augmented Gen)</span>
+                                <span class="text-xs px-2 py-0.5 bg-zinc-800 text-zinc-400 font-semibold rounded">Advanced</span>
+                            </div>
+                            <div class="w-full bg-zinc-850 h-2.5 rounded-full overflow-hidden">
+                                <div class="skill-progress-bar bg-brand-500 h-full rounded-full" style="width: 90%;"></div>
+                            </div>
+                        </div>
+                        <!-- Skill Item -->
+                        <div class="skill-item" data-skill-id="agents">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-sm font-semibold text-zinc-200">Multi-Agent Orchestration (LangGraph, State)</span>
+                                <span class="text-xs px-2 py-0.5 bg-zinc-800 text-zinc-400 font-semibold rounded">Intermediate</span>
+                            </div>
+                            <div class="w-full bg-zinc-850 h-2.5 rounded-full overflow-hidden">
+                                <div class="skill-progress-bar bg-brand-500 h-full rounded-full" style="width: 82%;"></div>
+                            </div>
+                        </div>
+                        <!-- Skill Item -->
+                        <div class="skill-item" data-skill-id="faiss">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-sm font-semibold text-zinc-200">Vector Databases (FAISS) &amp; Embeddings</span>
+                                <span class="text-xs px-2 py-0.5 bg-zinc-800 text-zinc-400 font-semibold rounded">Advanced</span>
+                            </div>
+                            <div class="w-full bg-zinc-850 h-2.5 rounded-full overflow-hidden">
+                                <div class="skill-progress-bar bg-brand-500 h-full rounded-full" style="width: 88%;"></div>
+                            </div>
+                        </div>
+                        <!-- Skill Item -->
+                        <div class="skill-item" data-skill-id="prompt">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-sm font-semibold text-zinc-200">Advanced Prompt Engineering &amp; Guardrails</span>
+                                <span class="text-xs px-2 py-0.5 bg-zinc-800 text-zinc-400 font-semibold rounded">Advanced</span>
+                            </div>
+                            <div class="w-full bg-zinc-850 h-2.5 rounded-full overflow-hidden">
+                                <div class="skill-progress-bar bg-brand-500 h-full rounded-full" style="width: 92%;"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="skill-item">
-                        <div class="skill-label"><span class="skill-name">Japanese</span><span class="skill-level">Basic (JLPT N5)</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width:30%;" data-width="30%"></div></div>
+                </div>
+
+                <!-- Machine Learning & Computer Vision Card -->
+                <div class="skill-group-card print-card bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:shadow-lg transition duration-300">
+                    <h4 class="text-sm font-extrabold uppercase text-zinc-400 tracking-wider mb-4 border-b border-zinc-800 pb-2">Machine Learning &amp; Computer Vision</h4>
+                    <div class="space-y-4">
+                        <!-- Skill Item -->
+                        <div class="skill-item" data-skill-id="xgboost">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-sm font-semibold text-zinc-200">Predictive Analytics &amp; Boosting (XGBoost)</span>
+                                <span class="text-xs px-2 py-0.5 bg-zinc-800 text-zinc-400 font-semibold rounded">Advanced</span>
+                            </div>
+                            <div class="w-full bg-zinc-850 h-2.5 rounded-full overflow-hidden">
+                                <div class="skill-progress-bar bg-teal-500 h-full rounded-full" style="width: 89%;"></div>
+                            </div>
+                        </div>
+                        <!-- Skill Item -->
+                        <div class="skill-item" data-skill-id="yolov8">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-sm font-semibold text-zinc-200">Object Detection &amp; Computer Vision (YOLOv8, OpenCV)</span>
+                                <span class="text-xs px-2 py-0.5 bg-zinc-850 h-2.5 rounded-full overflow-hidden">Intermediate</span>
+                            </div>
+                            <div class="w-full bg-zinc-850 h-2.5 rounded-full overflow-hidden">
+                                <div class="skill-progress-bar bg-teal-500 h-full rounded-full" style="width: 78%;"></div>
+                            </div>
+                        </div>
+                        <!-- Skill Item -->
+                        <div class="skill-item" data-skill-id="nlp">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-sm font-semibold text-zinc-200">Natural Language Processing (NLP)</span>
+                                <span class="text-xs px-2 py-0.5 bg-zinc-800 text-zinc-400 font-semibold rounded">Advanced</span>
+                            </div>
+                            <div class="w-full bg-zinc-850 h-2.5 rounded-full overflow-hidden">
+                                <div class="skill-progress-bar bg-teal-500 h-full rounded-full" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                        <!-- Skill Item -->
+                        <div class="skill-item" data-skill-id="mlops">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-sm font-semibold text-zinc-200">Model Deployment &amp; MLOps workflows</span>
+                                <span class="text-xs px-2 py-0.5 bg-zinc-850 h-2.5 rounded-full overflow-hidden">Intermediate</span>
+                            </div>
+                            <div class="w-full bg-zinc-850 h-2.5 rounded-full overflow-hidden">
+                                <div class="skill-progress-bar bg-teal-500 h-full rounded-full" style="width: 72%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Backend Engineering & Scalable APIs Card -->
+                <div class="skill-group-card print-card bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:shadow-lg transition duration-300">
+                    <h4 class="text-sm font-extrabold uppercase text-zinc-400 tracking-wider mb-4 border-b border-zinc-800 pb-2">Backend &amp; Cloud Integration</h4>
+                    <div class="space-y-4">
+                        <!-- Skill Item -->
+                        <div class="skill-item" data-skill-id="fastapi">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-sm font-semibold text-zinc-200">FastAPI (High-Performance Async Backend)</span>
+                                <span class="text-xs px-2 py-0.5 bg-zinc-800 text-zinc-400 font-semibold rounded">Advanced</span>
+                            </div>
+                            <div class="w-full bg-zinc-850 h-2.5 rounded-full overflow-hidden">
+                                <div class="skill-progress-bar bg-sky-500 h-full rounded-full" style="width: 88%;"></div>
+                            </div>
+                        </div>
+                        <!-- Skill Item -->
+                        <div class="skill-item" data-skill-id="spapi">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-sm font-semibold text-zinc-200">Amazon SP-API (Selling Partner Integration)</span>
+                                <span class="text-xs px-2 py-0.5 bg-zinc-800 text-zinc-400 font-semibold rounded">Advanced</span>
+                            </div>
+                            <div class="w-full bg-zinc-850 h-2.5 rounded-full overflow-hidden">
+                                <div class="skill-progress-bar bg-sky-500 h-full rounded-full" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                        <!-- Skill Item -->
+                        <div class="skill-item" data-skill-id="async">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-sm font-semibold text-zinc-200">Asynchronous Tasks &amp; Background Workers</span>
+                                <span class="text-xs px-2 py-0.5 bg-zinc-800 text-zinc-400 font-semibold rounded">Advanced</span>
+                            </div>
+                            <div class="w-full bg-zinc-850 h-2.5 rounded-full overflow-hidden">
+                                <div class="skill-progress-bar bg-sky-500 h-full rounded-full" style="width: 84%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Databases & Data Pipelines Card -->
+                <div class="skill-group-card print-card bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:shadow-lg transition duration-300">
+                    <h4 class="text-sm font-extrabold uppercase text-zinc-400 tracking-wider mb-4 border-b border-zinc-800 pb-2">Databases, Analytics &amp; Visualizations</h4>
+                    <div class="space-y-4">
+                        <!-- Skill Item -->
+                        <div class="skill-item" data-skill-id="sql">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-sm font-semibold text-zinc-200">SQL (PostgreSQL, MySQL, SQLite)</span>
+                                <span class="text-xs px-2 py-0.5 bg-zinc-800 text-zinc-400 font-semibold rounded">Intermediate</span>
+                            </div>
+                            <div class="w-full bg-zinc-850 h-2.5 rounded-full overflow-hidden">
+                                <div class="skill-progress-bar bg-amber-500 h-full rounded-full" style="width: 78%;"></div>
+                            </div>
+                        </div>
+                        <!-- Skill Item -->
+                        <div class="skill-item" data-skill-id="pipeline">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-sm font-semibold text-zinc-200">Custom Data Extraction &amp; Processing Pipelines</span>
+                                <span class="text-xs px-2 py-0.5 bg-zinc-800 text-zinc-400 font-semibold rounded">Advanced</span>
+                            </div>
+                            <div class="w-full bg-zinc-855 h-2.5 rounded-full overflow-hidden">
+                                <div class="skill-progress-bar bg-amber-500 h-full rounded-full" style="width: 86%;"></div>
+                            </div>
+                        </div>
+                        <!-- Skill Item -->
+                        <div class="skill-item" data-skill-id="viz">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-sm font-semibold text-zinc-200">Visualization &amp; Business Intelligence (Tableau, Seaborn)</span>
+                                <span class="text-xs px-2 py-0.5 bg-zinc-800 text-zinc-400 font-semibold rounded">Advanced</span>
+                            </div>
+                            <div class="w-full bg-zinc-855 h-2.5 rounded-full overflow-hidden">
+                                <div class="skill-progress-bar bg-amber-500 h-full rounded-full" style="width: 84%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Professional Experience & Framework Timeline -->
+        <section class="mb-12">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-6">Professional Experience</h3>
+            <div class="space-y-6">
+                
+                <!-- The Next Consultants -->
+                <div id="exp-next-consultants" class="experience-card print-card bg-zinc-900 border-l-4 border-brand-500 border border-zinc-800 p-6 rounded-r-2xl shadow-sm hover:shadow-md transition">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-3">
+                        <div>
+                            <span class="text-xs font-bold text-brand-100 uppercase tracking-widest">Sep 2025 – Present</span>
+                            <h4 class="text-lg font-extrabold text-white">AI Engineer</h4>
+                            <p class="text-sm font-semibold text-zinc-400">The Next Consultants · Remote / Delhi, India</p>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 md:self-start">
+                            <span class="px-2 py-0.5 text-xs bg-zinc-800 rounded font-mono text-zinc-300">FastAPI</span>
+                            <span class="px-2 py-0.5 text-xs bg-zinc-800 rounded font-mono text-zinc-300">Amazon SP-API</span>
+                            <span class="px-2 py-0.5 text-xs bg-zinc-800 rounded font-mono text-zinc-300">PostgreSQL</span>
+                            <span class="px-2 py-0.5 text-xs bg-zinc-800 rounded font-mono text-zinc-300">Async Workers</span>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm text-zinc-300 mb-4 font-medium italic">
+                        Building Amazon seller-focused SaaS products and internal tools using SP-API integrations, backend automation, analytics, and monitoring systems.
+                    </p>
+
+                    <ul class="text-sm text-zinc-300 space-y-2 list-disc list-inside mb-6">
+                        <li>Architected and deployed an enterprise <strong class="text-brand-100 font-semibold">Amazon Seller SaaS platform</strong> utilizing FastAPI, OAuth 2.0, asynchronous background tasks, and direct integrations across 10 Amazon SP-APIs.</li>
+                        <li>Developed highly scalable, resilient backend workflows designed with custom <strong class="text-brand-100 font-semibold">rate limiting, token bucket queues, pagination</strong>, and async task processing to process high-volume seller operations smoothly.</li>
+                        <li>Created a comprehensive, high-throughput <strong class="text-brand-100 font-semibold">Amazon Advertising module</strong> featuring 40+ API endpoints covering complex campaigns, ad groups, keywords, targeting metrics, and analytics reporting.</li>
+                        <li>Engineered high-accuracy ledger reconciliation data pipelines and custom multi-marketplace parsers to parse dynamic settlement data and financial reporting with <strong class="text-brand-100 font-semibold">100% computational correctness</strong>.</li>
+                        <li>Implemented multi-dimension <strong class="text-brand-100 font-semibold">profitability and inventory analytics engines</strong>, tracking order-level transactions, complex FBA fee structures, and FBA/FBM healthy inventory buffers.</li>
+                    </ul>
+
+                    <!-- SellerSignal Nested Highlight Showcase Card -->
+                    <div class="p-5 bg-zinc-950 border border-zinc-800 rounded-xl mt-4">
+                        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-800 pb-3 mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="h-2.5 w-2.5 rounded-full bg-brand-500 animate-pulse"></span>
+                                <h5 class="text-sm font-extrabold text-white">Product Spotlight: SellerSignal</h5>
+                            </div>
+                            <span class="px-2 py-0.5 bg-brand-950/60 text-brand-300 text-[10px] font-bold rounded-lg font-mono">ASIN Monitoring Utility</span>
+                        </div>
+                        <p class="text-xs text-zinc-400 mb-3 leading-relaxed">
+                            Built and commercialized <strong class="text-zinc-200">SellerSignal</strong>, a highly optimized listing monitoring microservice for Amazon merchants that automatically tracks high-priority ASIN lists and intercepts status changes.
+                        </p>
+                        <ul class="text-xs text-zinc-400 space-y-2 list-disc list-inside">
+                            <li>Implemented instant triggers and edge metrics for <strong class="text-brand-100 font-semibold">Buy Box changes</strong>, steep pricing fluctuations, competitor additions, and incomplete catalog states.</li>
+                            <li>Integrated secure webhook pipelines to transmit alerts directly via Telegram bot notifications and log historical changes onto optional Google Sheets frameworks.</li>
+                            <li>Significantly elevated seller visibility and response timelines, enabling merchants to mitigate page health degradations before overall ranking performance drops.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Thoughtbins Technologies -->
+                <div id="exp-thoughtbins" class="experience-card print-card bg-zinc-900 border-l-4 border-zinc-750 border border-zinc-800 p-6 rounded-r-2xl shadow-sm hover:shadow-md transition">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-3">
+                        <div>
+                            <span class="text-xs font-bold text-zinc-400 uppercase tracking-widest">Jul 2025 – Aug 2025</span>
+                            <h4 class="text-lg font-extrabold text-white">Generative AI Engineer</h4>
+                            <p class="text-sm font-semibold text-zinc-400">Thoughtbins Technologies · Remote / Kolkata, India</p>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 md:self-start">
+                            <span class="px-2 py-0.5 text-xs bg-zinc-800 rounded font-mono text-zinc-300">FAISS</span>
+                            <span class="px-2 py-0.5 text-xs bg-zinc-800 rounded font-mono text-zinc-300">Llama</span>
+                            <span class="px-2 py-0.5 text-xs bg-zinc-800 rounded font-mono text-zinc-300">Groq API</span>
+                            <span class="px-2 py-0.5 text-xs bg-zinc-800 rounded font-mono text-zinc-300">Guardrails</span>
+                        </div>
+                    </div>
+                    <ul class="text-sm text-zinc-300 space-y-2 list-disc list-inside">
+                        <li>Engineered a fully secure health-tech POC retrieval-augmented pipeline using FAISS and Llama via the high-speed Groq API.</li>
+                        <li>Combined static clinical domain knowledge bases with stateful user documents to formulate highly-personalized responses.</li>
+                        <li>Configured strict execution flow guardrails to completely eliminate hallucinations and enforce factual correctness.</li>
+                    </ul>
+                </div>
+
+                <!-- OAK Network (Internship) -->
+                <div id="exp-oak" class="experience-card print-card bg-zinc-900 border-l-4 border-zinc-755 border border-zinc-800 p-6 rounded-r-2xl shadow-sm hover:shadow-md transition">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-3">
+                        <div>
+                            <span class="text-xs font-bold text-zinc-400 uppercase tracking-widest">Aug 2024 – Sep 2024</span>
+                            <h4 class="text-lg font-extrabold text-white">Data Science Intern</h4>
+                            <p class="text-sm font-semibold text-zinc-400">OAK Network · Remote / London, UK</p>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 md:self-start">
+                            <span class="px-2 py-0.5 text-xs bg-zinc-800 rounded font-mono text-zinc-300">XGBoost</span>
+                            <span class="px-2 py-0.5 text-xs bg-zinc-800 rounded font-mono text-zinc-300">Energy Forecasting</span>
+                            <span class="px-2 py-0.5 text-xs bg-zinc-800 rounded font-mono text-zinc-300">Automation</span>
+                        </div>
+                    </div>
+                    <ul class="text-sm text-zinc-300 space-y-2 list-disc list-inside">
+                        <li>Constructed a highly optimized XGBoost regression pipeline predicting industrial energy usage and dynamic CO2 emissions with <strong class="text-brand-100 font-semibold">89.8% precision</strong>.</li>
+                        <li>Developed unified natural-language data-analysis template engines to speed up executive stakeholder business intelligence reviews.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Frameworks, Languages, Education & Certifications -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <!-- Education, Certs, Languages -->
+            <div class="space-y-6">
+                <!-- Education Card -->
+                <div class="print-card bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+                    <h4 class="text-sm font-extrabold uppercase text-zinc-400 tracking-wider mb-4 border-b border-zinc-800 pb-2">Academic &amp; Certifications</h4>
+                    <div class="space-y-4">
+                        <div>
+                            <span class="text-xs font-bold text-brand-100 uppercase">Feb 2024</span>
+                            <h5 class="text-sm font-bold text-white">Certificate Program in Data Science</h5>
+                            <p class="text-xs text-zinc-400">International Institute of Information Technology (IIIT Bengaluru)</p>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-zinc-500 uppercase">Aug 2022</span>
+                            <h5 class="text-sm font-bold text-white">Bachelor of Science in Physics</h5>
+                            <p class="text-xs text-zinc-400">St. Xavier's College, Goa</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Languages & Interpersonal Card -->
+                <div class="print-card bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+                    <h4 class="text-sm font-extrabold uppercase text-zinc-400 tracking-wider mb-4 border-b border-zinc-800 pb-2">Language Capabilities</h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <div class="flex justify-between items-center text-xs mb-1">
+                                <span class="font-semibold">English</span>
+                                <span class="text-zinc-500">Professional</span>
+                            </div>
+                            <div class="w-full bg-zinc-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-brand-500 h-full rounded-full" style="width: 95%;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-center text-xs mb-1">
+                                <span class="font-semibold">Japanese</span>
+                                <span class="text-emerald-400 font-bold">JLPT N4</span>
+                            </div>
+                            <div class="w-full bg-zinc-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-emerald-500 h-full rounded-full" style="width: 50%;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-center text-xs mb-1">
+                                <span class="font-semibold">Hindi</span>
+                                <span class="text-zinc-500">Professional</span>
+                            </div>
+                            <div class="w-full bg-zinc-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-brand-500 h-full rounded-full" style="width: 90%;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-center text-xs mb-1">
+                                <span class="font-semibold">Konkani</span>
+                                <span class="text-zinc-500">Native</span>
+                            </div>
+                            <div class="w-full bg-zinc-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-brand-500 h-full rounded-full" style="width: 100%;"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Footer -->
-        <div class="footer">
-            <p>Skill Sheet · Jacob Asir · Generated February 2026</p>
+            <!-- Unified Complete Skills Tech Stack Pill Container -->
+            <div class="print-card bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+                <h4 class="text-sm font-extrabold uppercase text-zinc-400 tracking-wider mb-4 border-b border-zinc-800 pb-2">Full Tech Stack Taxonomy</h4>
+                <div class="space-y-4">
+                    <div>
+                        <span class="text-[10px] font-bold uppercase text-brand-100 tracking-wider block mb-2">Frameworks &amp; APIs</span>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="tech-tag text-xs px-2.5 py-1 bg-zinc-950 border border-zinc-800 text-zinc-300 rounded-lg">LangChain</span>
+                            <span class="tech-tag text-xs px-2.5 py-1 bg-zinc-950 border border-zinc-800 text-zinc-300 rounded-lg">LangGraph</span>
+                            <span class="tech-tag text-xs px-2.5 py-1 bg-zinc-955 border border-zinc-800 text-zinc-300 rounded-lg">FAISS</span>
+                            <span class="tech-tag text-xs px-2.5 py-1 bg-zinc-955 border border-zinc-800 text-zinc-300 rounded-lg">Groq API</span>
+                            <span class="tech-tag text-xs px-2.5 py-1 bg-zinc-955 border border-zinc-800 text-zinc-300 rounded-lg">Gemini API</span>
+                            <span class="tech-tag text-xs px-2.5 py-1 bg-zinc-955 border border-zinc-800 text-zinc-300 rounded-lg">Amazon SP-API</span>
+                            <span class="tech-tag text-xs px-2.5 py-1 bg-zinc-955 border border-zinc-800 text-zinc-300 rounded-lg">Telegram Bot API</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-bold uppercase text-zinc-500 tracking-wider block mb-2">Data Science &amp; Engineering</span>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="tech-tag text-xs px-2.5 py-1 bg-zinc-955 border border-zinc-800 text-zinc-300 rounded-lg">Python</span>
+                            <span class="tech-tag text-xs px-2.5 py-1 bg-zinc-955 border border-zinc-800 text-zinc-300 rounded-lg">FastAPI</span>
+                            <span class="tech-tag text-xs px-2.5 py-1 bg-zinc-955 border border-zinc-800 text-zinc-300 rounded-lg">PostgreSQL</span>
+                            <span class="tech-tag text-xs px-2.5 py-1 bg-zinc-955 border border-zinc-800 text-zinc-300 rounded-lg">XGBoost</span>
+                            <span class="tech-tag text-xs px-2.5 py-1 bg-zinc-955 border border-zinc-800 text-zinc-300 rounded-lg">YOLOv8</span>
+                            <span class="tech-tag text-xs px-2.5 py-1 bg-zinc-955 border border-zinc-800 text-zinc-300 rounded-lg">SQLite</span>
+                            <span class="tech-tag text-xs px-2.5 py-1 bg-zinc-955 border border-zinc-800 text-zinc-300 rounded-lg">Seaborn / Tableau</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-bold uppercase text-zinc-500 tracking-wider block mb-2">Tools &amp; Infrastructure</span>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="tech-tag text-xs px-2.5 py-1 bg-zinc-955 border border-zinc-800 text-zinc-300 rounded-lg">Docker</span>
+                            <span class="tech-tag text-xs px-2.5 py-1 bg-zinc-955 border border-zinc-800 text-zinc-300 rounded-lg">Git &amp; GitHub</span>
+                            <span class="tech-tag text-xs px-2.5 py-1 bg-zinc-955 border border-zinc-800 text-zinc-300 rounded-lg">VS Code</span>
+                            <span class="tech-tag text-xs px-2.5 py-1 bg-zinc-955 border border-zinc-800 text-zinc-300 rounded-lg">N8N</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer block -->
+        <footer class="border-t border-zinc-800 pt-6 text-center text-xs text-zinc-500">
+            <p>Jacob Asir · Interactive Skill Sheet · Goa, India</p>
+        </footer>
+    </main>
+
+    <!-- IMMERSIVE JAPAN PORTFOLIO HUB MODAL OVERLAY -->
+    <div id="jp-hub-modal" class="no-print fixed inset-0 z-50 bg-zinc-950/80 backdrop-blur-md hidden flex items-center justify-center p-4 animate-fadeIn">
+        <!-- Modal Content Card -->
+        <div class="bg-zinc-900 border border-zinc-800 w-full max-w-5xl max-h-[90vh] overflow-hidden rounded-2xl shadow-2xl flex flex-col scale-95 opacity-0 transition-all duration-300" id="jp-modal-card">
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-zinc-800 flex items-center justify-between bg-gradient-to-r from-red-500/10 to-transparent">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-[10px] font-extrabold text-red-400 tracking-widest uppercase">Production-Ready Ecosystem</span>
+                        <span class="h-2 w-2 rounded-full bg-red-500"></span>
+                    </div>
+                    <h3 class="text-xl font-black text-white flex items-center gap-2 mt-1">
+                        🇯🇵 Build to Japan Series <span class="font-normal text-sm text-zinc-400">| Engineering Showcase</span>
+                    </h3>
+                </div>
+                <button onclick="closeJapanHub()" class="p-2 rounded-xl hover:bg-zinc-85 transition text-zinc-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <!-- Modal Content Area (Scrollable) -->
+            <div class="p-6 overflow-y-auto space-y-6">
+                <!-- Short Overview intro -->
+                <div class="p-4 bg-zinc-950/40 border border-zinc-800/80 rounded-xl text-sm">
+                    <p class="text-zinc-300 leading-relaxed">
+                        Build to Japan series is a personal engineering sprint to build highly contextual, AI-powered utilities designed to solve real, everyday friction points for residents and travelers in Japan—pushing the boundaries of agentic RAG pipelines, multimodal vision systems, and more.
+                    </p>
+                </div>
+
+                <!-- 5 Apps Grid inside Modal -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    
+                    <!-- App 1: JapanEase AI -->
+                    <div class="jp-modal-app p-5 border border-zinc-850 bg-zinc-950/20 rounded-xl flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-[9px] font-bold text-red-400 uppercase tracking-widest font-mono">01 / RAG &amp; Agents</span>
+                            </div>
+                            <h4 class="text-md font-extrabold text-white">JapanEase AI</h4>
+                            <p class="text-xs text-zinc-400 mt-2 leading-relaxed">
+                                A production-ready, multilingual agentic RAG assistant for navigating Japanese bureaucracy. Helps foreign and local residents in Japan navigate complex immigration procedures, municipal registrations, and bureaucratic workflows with grounded, authoritative answers sourced from official data.
+                            </p>
+                        </div>
+                        <div>
+                            <div class="mt-4 flex flex-wrap gap-1">
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">Python</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">RAG</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">VectorStore</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">LangGraph</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">BM25 + Vector</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">Cohere Reranker</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">Youdotcom</span>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-zinc-800/80 flex justify-end">
+                                <a href="https://japanease-frontend.onrender.com/" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-lg transition duration-200 shadow-sm shadow-red-500/10">
+                                    <span>Launch App</span>
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- App 2: GomiSense -->
+                    <div class="jp-modal-app p-5 border border-zinc-850 bg-zinc-950/20 rounded-xl flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-[9px] font-bold text-red-400 uppercase tracking-widest font-mono">02 / Multimodal AI</span>
+                            </div>
+                            <h4 class="text-md font-extrabold text-white">GomiSense</h4>
+                            <p class="text-xs text-zinc-400 mt-2 leading-relaxed">
+                                A smart, local-first garbage-sorting assistant designed to solve a daily frustration for residents in Japan. By combining multimodal AI with specific municipality rules, it turns a complex chore into a seamless interaction.
+                            </p>
+                        </div>
+                        <div>
+                            <div class="mt-4 flex flex-wrap gap-1">
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">Python</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">VLM</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">Voice LLM</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">ASR</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">TypeScript</span>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-zinc-800/80 flex justify-end">
+                                <a href="https://gomisense-frontend.onrender.com/" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-lg transition duration-200 shadow-sm shadow-red-500/10">
+                                    <span>Launch App</span>
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- App 3: KusuriCheck -->
+                    <div class="jp-modal-app p-5 border border-zinc-850 bg-zinc-950/20 rounded-xl flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-[9px] font-bold text-red-400 uppercase tracking-widest font-mono">03 / Medical Scanner</span>
+                            </div>
+                            <h4 class="text-md font-extrabold text-white">KusuriCheck</h4>
+                            <p class="text-xs text-zinc-400 mt-2 leading-relaxed">
+                                A medicine and supplement sheet scanner for Japan. Users scan OTC medicine boxes, prescription instruction sheets, or supplement labels and get plain Japanese/English explanations for dosage timing, warnings, ingredient conflicts, and "when to avoid."
+                            </p>
+                        </div>
+                        <div>
+                            <div class="mt-4 flex flex-wrap gap-1">
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">Python</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">LangChain</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">OCR</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">LLM</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">TypeScript</span>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-zinc-800/80 flex justify-end">
+                                <a href="https://kusuricheck-frontend.onrender.com/" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-lg transition duration-200 shadow-sm shadow-red-500/10">
+                                    <span>Launch App</span>
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- App 4: ShiroScan -->
+                    <div class="jp-modal-app p-5 border border-zinc-850 bg-zinc-950/20 rounded-xl flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-[9px] font-bold text-red-400 uppercase tracking-widest font-mono">04 / Allergen Scanner</span>
+                            </div>
+                            <h4 class="text-md font-extrabold text-white">ShiroScan <span class="font-normal text-xs text-slate-400">(シロスキャン)</span></h4>
+                            <p class="text-xs text-zinc-400 mt-2 leading-relaxed">
+                                Understand any Japanese food label in seconds. ShiroScan is a professional-grade ingredient scanner designed to help travelers and residents in Japan navigate complex food labels with ease, focusing on dietary safety and allergen detection.
+                            </p>
+                        </div>
+                        <div>
+                            <div class="mt-4 flex flex-wrap gap-1">
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">Python</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">LangChain</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">LLM</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">OCR</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">TypeScript</span>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-zinc-800/80 flex justify-end">
+                                <a href="https://shiroscan-frontend.onrender.com/" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-lg transition duration-200 shadow-sm shadow-red-500/10">
+                                    <span>Launch App</span>
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- App 5: KonbiniCompare -->
+                    <div class="jp-modal-app p-5 border border-zinc-850 bg-zinc-950/20 rounded-xl md:col-span-2 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-[9px] font-bold text-red-400 uppercase tracking-widest font-mono">05 / Comparison Engine</span>
+                            </div>
+                            <h4 class="text-md font-extrabold text-white">KonbiniCompare <span class="font-normal text-xs text-slate-400">| コンビニ比較</span></h4>
+                            <p class="text-xs text-zinc-400 mt-2 leading-relaxed">
+                                Which one should I grab? どっちを選ぶ？ KonbiniCompare helps you make quick, confident decisions in Japanese convenience stores. Search or scan any product, compare two items, and get an instant personalized verdict with honest trade-offs.
+                            </p>
+                        </div>
+                        <div>
+                            <div class="mt-4 flex flex-wrap gap-1">
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">Python</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">LLM</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">Open Food Facts API</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">Llama</span>
+                                <span class="px-2 py-0.5 bg-zinc-955 border border-zinc-800 text-[9px] font-mono text-zinc-400 rounded">TypeScript</span>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-zinc-800/80 flex justify-end">
+                                <a href="https://konbinicompare-frontend.onrender.com/" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-lg transition duration-200 shadow-sm shadow-red-500/10">
+                                    <span>Launch App</span>
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 bg-zinc-950 border-t border-zinc-800 text-center text-xs text-zinc-500">
+                <span>Jacob Asir · Build to Japan Engineering Sprint</span>
+            </div>
         </div>
     </div>
 
+    <!-- Custom State Logic & Interactive Search Javascript -->
     <script>
-        // Animate skill bars on load
-        document.addEventListener('DOMContentLoaded', () => {
+        // Ensure Dark Mode is always active
+        document.documentElement.classList.add('dark');
+
+        // Overlay Modal Management Functions
+        function openJapanHub() {
+            const modal = document.getElementById('jp-hub-modal');
+            const card = document.getElementById('jp-modal-card');
+            modal.classList.remove('hidden');
             setTimeout(() => {
-                document.querySelectorAll('.skill-bar-fill').forEach(bar => {
-                    const w = bar.getAttribute('data-width');
-                    const colors = ['#21808d','#32b8c6','#3b82f6','#22c55e','#9333ea','#f97316','#06b6d4','#ec4899'];
-                    const idx = Math.floor(Math.random() * colors.length);
-                    bar.style.background = `linear-gradient(90deg, ${colors[idx]}, ${colors[(idx+1) % colors.length]})`;
-                    bar.style.width = w;
-                });
-            }, 200);
-        });
+                card.classList.remove('scale-95', 'opacity-0');
+                card.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
 
-        // PDF Download
-        function downloadPDF() {
-            const btn = document.querySelector('.btn-download');
-            const genText = document.getElementById('gen-text');
-            btn.disabled = true;
-            btn.textContent = 'Generating...';
-            genText.classList.add('show');
-
-            const element = document.getElementById('skill-sheet');
-
-            // Force all bars to full width for PDF
-            document.querySelectorAll('.skill-bar-fill').forEach(bar => {
-                bar.style.transition = 'none';
-                bar.style.width = bar.getAttribute('data-width');
-            });
-
-            const opt = {
-                margin: [10, 10, 10, 10],
-                filename: 'Jacob_Asir_Skill_Sheet.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, logging: false },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-            };
-
-            html2pdf().set(opt).from(element).save().then(() => {
-                downloadBar.style.display = 'block';
-                btn.disabled = false;
-                btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download as PDF';
-                genText.classList.remove('show');
-
-                document.querySelectorAll('.skill-bar-fill').forEach(bar => {
-                    bar.style.transition = 'width 1s cubic-bezier(0.16, 1, 0.3, 1)';
-                });
-            });
+        function closeJapanHub() {
+            const modal = document.getElementById('jp-hub-modal');
+            const card = document.getElementById('jp-modal-card');
+            card.classList.remove('scale-100', 'opacity-100');
+            card.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
         }
     </script>
 </body>
